@@ -104,7 +104,7 @@ class _LoginViewState extends State<LoginView> {
 
               SizedBox(height: 32,),
 
-              Text('Forget Email or Password ?',
+              Text('Forget Email Or Password ?',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
