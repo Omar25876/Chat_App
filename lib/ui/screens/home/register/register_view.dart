@@ -1,4 +1,7 @@
+import 'package:chat/ui/screens/home/register/connector_between_view_viewmodal.dart';
+import 'package:chat/ui/screens/home/register/register_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterView extends StatefulWidget {
   static String routeName = 'Register View';
@@ -7,155 +10,218 @@ class RegisterView extends StatefulWidget {
   State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class _RegisterViewState extends State<RegisterView> implements Connector {
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
   bool visable = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  RegisterViewModel viewModel = RegisterViewModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    viewModel.connector = this;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        image: DecorationImage(image: AssetImage('assets/bg.png'),fit: BoxFit.fill),
-      ),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Colors.white,
-            size: 32,
-          ),
-          backgroundColor: Colors.transparent,
-          title: Text('Register',style: TextStyle(
-            color: Colors.white,fontSize: 28,fontWeight: FontWeight.bold,
-          ),),
-          centerTitle: true,
-          elevation: 0.0,
-
+    return ChangeNotifierProvider(
+      create: (context) => viewModel,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          image: DecorationImage(image: AssetImage('assets/bg.png'),fit: BoxFit.fill),
         ),
-        body: Container(
-          padding: EdgeInsets.fromLTRB(20,20,20,50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height*0.2,),
-              TextFormField(
-                onTap: (){
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: Colors.white,
+              size: 32,
+            ),
+            backgroundColor: Colors.transparent,
+            title: Text('Register',style: TextStyle(
+              color: Colors.white,fontSize: 28,fontWeight: FontWeight.bold,
+            ),),
+            centerTitle: true,
+            elevation: 0.0,
 
-                },
-                keyboardType: TextInputType.name,
-                style: TextStyle(
-                  color: Color.fromRGBO(36, 39, 43, 1.0),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Please Enter Your Name',
-                  hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
-                      fontSize: 16,fontWeight: FontWeight.normal),
-                  suffixIcon: Icon(Icons.person,color: Theme.of(context).colorScheme.primary,size: 26,),
-                  focusColor: Colors.cyan,
-                  border: UnderlineInputBorder(borderSide: BorderSide(
-                    color: Colors.cyan,
-                  )),
-                  labelText: 'Name',
-                  labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
-                      fontSize: 16,fontWeight: FontWeight.normal),
-                ),
-              ),
-
-              SizedBox(height: 20,),
-              TextFormField(
-                onTap: (){
-
-                },
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(
-                  color: Color.fromRGBO(36, 39, 43, 1.0),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Please enter e-mail',
-                  hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
-                      fontSize: 16,fontWeight: FontWeight.normal),
-                  suffixIcon: ImageIcon(AssetImage('assets/Iconfettle.png',),color: Theme.of(context).colorScheme.primary,size: 40, ),
-                  focusColor: Colors.cyan,
-                  border: UnderlineInputBorder(borderSide: BorderSide(
-                    color: Colors.cyan,
-                  )),
-                  labelText: 'Email',
-                  labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
-                      fontSize: 16,fontWeight: FontWeight.normal),
-                ),
-              ),
-
-              SizedBox(height: 20,),
-
-              TextFormField(
-                onTap: (){
-
-                },
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: visable == true? false:true,
-                style: TextStyle(
-                  color: Color.fromRGBO(36, 39, 43, 1.0),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Please enter password',
-                  hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
-                      fontSize: 16,fontWeight: FontWeight.normal),
-                  suffixIcon: IconButton(
-                      onPressed:(){
-                        setState(() {
-                          if(visable = true){
-                            visable = false;
-                          }
-                          else{
-                            visable = true;
-                          }
-                        });
-                      },
-                      icon: visable == true? ImageIcon(AssetImage('assets/view.png'), color: Theme.of(context).colorScheme.primary, size: 26,)
-                          :Icon(Icons.visibility_off_outlined,color:Theme.of(context).colorScheme.primary,size: 26,)
+          ),
+          body: Form(
+            key: formkey,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(20,20,20,50),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height*0.2,),
+                  TextFormField(
+                    validator: (text){
+                      if(text!.trim() == ''){
+                        return "Please Enter Name";
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.name,
+                    style: TextStyle(
+                      color: Color.fromRGBO(36, 39, 43, 1.0),
+                      fontWeight: FontWeight.normal,
+                      fontSize: 18,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Please Enter Your Name',
+                      hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                          fontSize: 16,fontWeight: FontWeight.normal),
+                      suffixIcon: Icon(Icons.person,color: Theme.of(context).colorScheme.primary,size: 26,),
+                      focusColor: Colors.cyan,
+                      border: UnderlineInputBorder(borderSide: BorderSide(
+                        color: Colors.cyan,
+                      )),
+                      labelText: 'Name',
+                      labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                          fontSize: 16,fontWeight: FontWeight.normal),
+                    ),
                   ),
-                  focusColor: Colors.cyan,
-                  border: UnderlineInputBorder(borderSide: BorderSide(
-                    color: Colors.cyan,
-                  )),
-                  labelText: 'Password',
-                  labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
-                      fontSize: 16,fontWeight: FontWeight.normal),
-                ),
-              ),
 
-             Spacer(),
-
-              ElevatedButton(onPressed: (){
-
-              },
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  child: Row(
-                    children: [
-                      Text('Create Account',textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),),
-                      Spacer(),
-                      Icon(Icons.arrow_forward,size: 21,color: Colors.white,),
-                    ],
+                  SizedBox(height: 20,),
+                  TextFormField(
+                    validator: (text){
+                      if(text!.trim() == ''){
+                        return "Please Enter Email";
+                      }
+                      bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(text);
+                      if(!emailValid){
+                        return "Please Enter Correct Email";
+                      }
+                      return null;
+                    },
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    style: TextStyle(
+                      color: Color.fromRGBO(36, 39, 43, 1.0),
+                      fontWeight: FontWeight.normal,
+                      fontSize: 18,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Please enter e-mail',
+                      hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                          fontSize: 16,fontWeight: FontWeight.normal),
+                      suffixIcon: ImageIcon(AssetImage('assets/Iconfettle.png',),color: Theme.of(context).colorScheme.primary,size: 40, ),
+                      focusColor: Colors.cyan,
+                      border: UnderlineInputBorder(borderSide: BorderSide(
+                        color: Colors.cyan,
+                      )),
+                      labelText: 'Email',
+                      labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                          fontSize: 16,fontWeight: FontWeight.normal),
+                    ),
                   ),
-                ),
+
+                  SizedBox(height: 20,),
+
+                  TextFormField(
+                    validator: (text){
+                      if(text!.trim() == ''){
+                        return "Please Enter Password";
+                      }
+                      bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(text);
+                      return null;
+                    },
+                    controller: passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: visable == true? false:true,
+                    style: TextStyle(
+                      color: Color.fromRGBO(36, 39, 43, 1.0),
+                      fontWeight: FontWeight.normal,
+                      fontSize: 18,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Please enter password',
+                      hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                          fontSize: 16,fontWeight: FontWeight.normal),
+                      suffixIcon: IconButton(
+                          onPressed:(){
+                            setState(() {
+                              if(visable = true){
+                                visable = false;
+                              }
+                              else{
+                                visable = true;
+                              }
+                            });
+                          },
+                          icon: visable == true? ImageIcon(AssetImage('assets/view.png'), color: Theme.of(context).colorScheme.primary, size: 26,)
+                              :Icon(Icons.visibility_off_outlined,color:Theme.of(context).colorScheme.primary,size: 26,)
+                      ),
+                      focusColor: Colors.cyan,
+                      border: UnderlineInputBorder(borderSide: BorderSide(
+                        color: Colors.cyan,
+                      )),
+                      labelText: 'Password',
+                      labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                          fontSize: 16,fontWeight: FontWeight.normal),
+                    ),
+                  ),
+
+                 Spacer(),
+
+                  ElevatedButton(onPressed: (){
+                    Createaccount();
+                  },
+                    child: Container(
+                      padding: EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          Text('Create Account',textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),),
+                          Spacer(),
+                          Icon(Icons.arrow_forward,size: 21,color: Colors.white,),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
     );
+  }
+  void Createaccount(){
+    if(formkey.currentState!.validate()){
+      viewModel.CreateAccountWithFireBaseAuth(emailController.text, passwordController.text);
+    }
+  }
+
+  @override
+  void hideLoading() {
+    Navigator.pop(context);
+  }
+
+  @override
+  void showLoading() {
+    showDialog(context: context, builder: (context){
+      return AlertDialog(
+        title: Center(child: CircularProgressIndicator(),),
+      );
+    });
+  }
+
+  @override
+  void showMessage(String message) {
+    showDialog(context: context, builder: (context){
+      return AlertDialog(
+        content: Text(message,style: TextStyle(fontSize: 18,),),
+      );
+    });
   }
 }
