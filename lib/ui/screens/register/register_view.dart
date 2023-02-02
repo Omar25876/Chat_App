@@ -1,5 +1,9 @@
-import 'package:chat/ui/screens/home/register/connector_between_view_viewmodal.dart';
-import 'package:chat/ui/screens/home/register/register_view_model.dart';
+import 'package:chat/providers/provider.dart';
+import 'package:chat/ui/screens/base.dart';
+import 'package:chat/ui/screens/home/home_view.dart';
+import 'package:chat/ui/screens/login/login_view.dart';
+import 'package:chat/ui/screens/register/register_navigator.dart';
+import 'package:chat/ui/screens/register/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,18 +14,26 @@ class RegisterView extends StatefulWidget {
   State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> implements Connector {
+class _RegisterViewState extends BaseView<RegisterView,RegisterViewModel>
+implements RegisterNavigator{
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   bool visable = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+
   RegisterViewModel viewModel = RegisterViewModel();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    viewModel.connector = this;
+    viewModel.navigator = this;
+  }
+
+  @override
+  RegisterViewModel initViewModel() {
+    return RegisterViewModel();
   }
 
   @override
@@ -58,12 +70,14 @@ class _RegisterViewState extends State<RegisterView> implements Connector {
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height*0.2,),
                   TextFormField(
+                    textInputAction: TextInputAction.next,
                     validator: (text){
                       if(text!.trim() == ''){
                         return "Please Enter Name";
                       }
                       return null;
                     },
+                    controller: namecontroller,
                     keyboardType: TextInputType.name,
                     style: TextStyle(
                       color: Color.fromRGBO(36, 39, 43, 1.0),
@@ -87,6 +101,7 @@ class _RegisterViewState extends State<RegisterView> implements Connector {
 
                   SizedBox(height: 20,),
                   TextFormField(
+                    textInputAction: TextInputAction.next,
                     validator: (text){
                       if(text!.trim() == ''){
                         return "Please Enter Email";
@@ -123,6 +138,7 @@ class _RegisterViewState extends State<RegisterView> implements Connector {
                   SizedBox(height: 20,),
 
                   TextFormField(
+                    textInputAction: TextInputAction.done,
                     validator: (text){
                       if(text!.trim() == ''){
                         return "Please Enter Password";
@@ -170,7 +186,7 @@ class _RegisterViewState extends State<RegisterView> implements Connector {
                  Spacer(),
 
                   ElevatedButton(onPressed: (){
-                    Createaccount();
+                    validateAccount();
                   },
                     child: Container(
                       padding: EdgeInsets.all(16),
@@ -188,6 +204,21 @@ class _RegisterViewState extends State<RegisterView> implements Connector {
                       ),
                     ),
                   ),
+                  SizedBox(height: 30,),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, LoginView.routeName);
+                    },
+                    child: Text('Already Have Account ?',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        decorationColor: Theme.of(context).colorScheme.primary,
+                        decorationThickness: 2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),),
+                  ),
                 ],
               ),
             ),
@@ -196,32 +227,17 @@ class _RegisterViewState extends State<RegisterView> implements Connector {
       ),
     );
   }
-  void Createaccount(){
+  void validateAccount(){
     if(formkey.currentState!.validate()){
-      viewModel.CreateAccountWithFireBaseAuth(emailController.text, passwordController.text);
+      viewModel.CreateAccountWithFireBaseAuth(
+          namecontroller.text,emailController.text, passwordController.text
+      );
     }
   }
 
   @override
-  void hideLoading() {
-    Navigator.pop(context);
-  }
-
-  @override
-  void showLoading() {
-    showDialog(context: context, builder: (context){
-      return AlertDialog(
-        title: Center(child: CircularProgressIndicator(),),
-      );
-    });
-  }
-
-  @override
-  void showMessage(String message) {
-    showDialog(context: context, builder: (context){
-      return AlertDialog(
-        content: Text(message,style: TextStyle(fontSize: 18,),),
-      );
-    });
+  void goToHome(MyUser) {
+    var provider = Provider.of<MyProvider>(context,listen: false);
+    Navigator.pushReplacementNamed(context, HomeScreen.routName);
   }
 }

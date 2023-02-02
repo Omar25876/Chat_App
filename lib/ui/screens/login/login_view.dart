@@ -1,6 +1,13 @@
-import 'package:chat/ui/screens/home/login/login_view_model.dart';
-import 'package:chat/ui/screens/home/register/register_view.dart';
+
+import 'package:chat/models/user_model.dart';
+import 'package:chat/providers/provider.dart';
+import 'package:chat/ui/screens/base.dart';
+import 'package:chat/ui/screens/home/home_view.dart';
+import 'package:chat/ui/screens/login/login_navigator.dart';
+import 'package:chat/ui/screens/login/login_view_model.dart';
+import 'package:chat/ui/screens/register/register_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
   static String routeName = 'Login View';
@@ -9,11 +16,22 @@ class LoginView extends StatefulWidget {
   State<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginViewState extends BaseView<LoginView, LoginViewModel>
+    implements LoginNavigator {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   bool visable = false;
   var  email =TextEditingController();
   var  password =TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel.navigator=this;
+  }
+  @override
+  LoginViewModel initViewModel() {
+    return LoginViewModel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +79,7 @@ class _LoginViewState extends State<LoginView> {
                     fontWeight: FontWeight.normal,
                     fontSize: 18,
                   ),
+                  textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     hintText: 'Please enter e-mail',
                     hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
@@ -79,6 +98,7 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(height: 20,),
 
                 TextFormField(
+                  controller: password,
                   validator: (text){
                     if(text!.trim() == ''){
                       return "Please Enter Password";
@@ -133,7 +153,7 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(height: 32,),
 
                 ElevatedButton(onPressed: (){
-
+                  ValidateForm();
                 },
                     child: Container(
                       padding: EdgeInsets.all(16),
@@ -155,7 +175,7 @@ class _LoginViewState extends State<LoginView> {
 
                 InkWell(
                   onTap: (){
-                    Navigator.pushNamed(context, RegisterView.routeName);
+                    Navigator.pushReplacementNamed(context, RegisterView.routeName);
                   },
                   child: Text('Or Create My Account ?',
                     style: TextStyle(
@@ -174,4 +194,15 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
+  void ValidateForm() async {
+    if (formkey.currentState!.validate()) {
+      viewModel.login(email.text, password.text);
+    }
+  }
+  @override
+  void goToHome(MyUser myUser) {
+    var provider = Provider.of<MyProvider>(context,listen: false);
+    Navigator.pushReplacementNamed(context, HomeScreen.routName);
+  }
+
 }
