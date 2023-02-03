@@ -1,9 +1,11 @@
+import 'package:chat/models/room_model.dart';
 import 'package:chat/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DataBaseUtils{
 
-
+///////////////////////////////////////////////////////////
+//todo: Users
   static CollectionReference<MyUser> getUsersCollection() {
     return FirebaseFirestore.instance
         .collection(MyUser.COLLECTION_NAME)
@@ -26,4 +28,27 @@ class DataBaseUtils{
     return myUser;
   }
 
+  ///////////////////////////////////////////////////////////
+  //todo: Rooms
+  static CollectionReference<Room> getRoomsCollection() {
+    return FirebaseFirestore.instance
+        .collection(Room.COLLECTION_NAME)
+        .withConverter<Room>(
+      fromFirestore: (snapshot, options) => Room.fromJson(snapshot.data()!),
+      toFirestore: (room, options) => room.toJson(),
+    );
+  }
+  //todo: add room to database
+  static Future<void> AddRoomToFirestore(Room room) {
+    var docRef = getRoomsCollection().doc();
+    room.id = docRef.id;
+    return docRef.set(room);
+  }
+
+  static Future<List<Room>> getRoomsFromFirestore() async {
+    QuerySnapshot<Room> snapRoom = await getRoomsCollection().get();
+    return snapRoom.docs.map((e) => e.data()).toList();
+  }
+///////////////////////////////////////////////////////////
+//todo: Messages
 }

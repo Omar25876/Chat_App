@@ -1,3 +1,4 @@
+import 'package:chat/models/room_category_model.dart';
 import 'package:chat/ui/screens/add_room/add_room_navigator.dart';
 import 'package:chat/ui/screens/add_room/add_room_view_model.dart';
 import 'package:chat/ui/screens/base.dart';
@@ -17,11 +18,14 @@ implements AddRoomNavigator{
   var  title =TextEditingController();
 
   var  description =TextEditingController();
+  var categories = RoomCategory.getCategories();
+  late RoomCategory selectedCategory;
 
   @override
   void initState() {
     super.initState();
     viewModel.navigator = this;
+    selectedCategory = categories.first;
   }
   @override
   AddRoomViewModel initViewModel() {
@@ -93,9 +97,36 @@ implements AddRoomNavigator{
                               fontSize: 16,fontWeight: FontWeight.normal),
                         ),
                       ),
-                      SizedBox(height: 40,),
 
-                      SizedBox(height: 40,),
+                      Container(
+                        padding: EdgeInsets.all(16),
+                        child: DropdownButton<RoomCategory>(
+                          value: selectedCategory,
+                          items: categories
+                              .map((cat) => DropdownMenuItem<RoomCategory>(
+                              value: cat,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(5),
+
+                                      child: Image.asset(cat.image)),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  Text(cat.name,style: TextStyle(fontSize: 22,
+                                  fontWeight: FontWeight.bold),)
+                                ],
+                              )))
+                              .toList(),
+                          onChanged: (value) {
+                            if (value == null) return;
+                            selectedCategory = value;
+                            setState(() {});
+                          },
+                        ),
+                      ),
+
 
                       TextFormField(
                         validator: (text){
@@ -138,7 +169,7 @@ implements AddRoomNavigator{
                           padding: MaterialStatePropertyAll(EdgeInsets.fromLTRB(70, 10, 70, 10))
                         ),
                         onPressed: (){
-
+                          ValidateForm();
                       },
                           child: Text('Create',style: TextStyle(
                             fontSize: 16,
@@ -157,14 +188,17 @@ implements AddRoomNavigator{
 
   void ValidateForm() async {
     if (formkey.currentState!.validate()) {
-
+      viewModel.CreateRoom(title.text,
+          description.text, selectedCategory.id);
     }
   }
 
   @override
-  void goToHome() {
-    // TODO: implement goToHome
+  void roomCreated() {
+    Navigator.pop(context);
   }
+
+
 
 
 }
