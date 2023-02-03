@@ -2,6 +2,7 @@ import 'package:chat/firebase_options.dart';
 import 'package:chat/providers/provider.dart';
 import 'package:chat/shared/styles/mytheme.dart';
 import 'package:chat/ui/screens/add_room/add_room_view.dart';
+import 'package:chat/ui/screens/chat/chat_view.dart';
 import 'package:chat/ui/screens/home/home_view.dart';
 import 'package:chat/ui/screens/login/login_view.dart';
 import 'package:chat/ui/screens/register/register_view.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         RegisterView.routeName:(context) => RegisterView(),
         LoginView.routeName:(context) => LoginView(),
         AddRoomView.routeName : (context) => AddRoomView(),
+        ChatView.routeName : (context) => ChatView(),
       },
       initialRoute: provider.firebaseUser != null?HomeScreen.routName:LoginView.routeName,
       theme: MyTheme.Light,
