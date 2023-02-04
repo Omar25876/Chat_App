@@ -26,12 +26,11 @@ class RoomItem extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                width: 180,height:120,
-                  padding: EdgeInsets.only(top: 12),
+                width: 180,height:110,
+                  padding: EdgeInsets.only(top: 11),
                   child: Image.asset('assets/${room.catId}.jpeg',)),
               Container(
-                padding: EdgeInsets.only(top: 4,bottom: 4),
-                margin: EdgeInsets.only(bottom: 1),
+                padding: EdgeInsets.only(bottom: 4),
                 child: Text("${room.roomName}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,

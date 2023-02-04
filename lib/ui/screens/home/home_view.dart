@@ -1,3 +1,4 @@
+import 'package:chat/providers/provider.dart';
 import 'package:chat/ui/screens/add_room/add_room_view.dart';
 import 'package:chat/ui/screens/base.dart';
 import 'package:chat/ui/screens/chat/chat_view.dart';
@@ -24,7 +25,7 @@ class _HomeScreenState extends BaseView<HomeScreen, HomeViewModel>
     // TODO: implement initState
     super.initState();
     viewModel.navigator=this;
-    viewModel.getRooms();
+     viewModel.getRooms();
   }
 
   @override
