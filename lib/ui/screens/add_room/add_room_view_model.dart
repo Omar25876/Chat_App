@@ -5,6 +5,7 @@ import 'package:chat/ui/screens/base.dart';
 
 
 class AddRoomViewModel extends BaseViewModel<AddRoomNavigator> {
+
   void CreateRoom(String roomName, String roomDescription, String catId) {
     Room room = Room(
         roomName: roomName, roomDescription: roomDescription, catId: catId);
@@ -12,6 +13,14 @@ class AddRoomViewModel extends BaseViewModel<AddRoomNavigator> {
       navigator!.roomCreated();
     }).catchError((error) {
       navigator!.showMessage(error.toString());
+    });
+  }
+
+  List<Room> rooms = [];
+
+  void getRooms() {
+    DataBaseUtils.getRoomsFromFirestore().then((value) {
+      rooms = value;
     });
   }
 }

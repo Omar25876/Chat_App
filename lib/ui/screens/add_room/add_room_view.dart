@@ -196,6 +196,7 @@ implements AddRoomNavigator{
   @override
   void roomCreated() {
     Navigator.pop(context);
+    viewModel.getRooms();
   }
 
 
