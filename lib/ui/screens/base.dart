@@ -30,13 +30,13 @@ extends State<T> implements BaseNavigator{
   }
 
   @override
-  void showLoading({String message = 'Loading..'}) {
+  void showLoading({String message = '  Loading..'}) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Center(
             child: Row(
-              children: [CircularProgressIndicator(), Text(message)],
+              children: [const CircularProgressIndicator(), Text(message)],
             )),
       ),
     );
@@ -48,7 +48,7 @@ extends State<T> implements BaseNavigator{
       context: context,
       builder: (context) =>
           AlertDialog(
-            title: Text("Note!"),
+            title: const Text(" Alert !"),
             content: Text(message),
           ),
     );

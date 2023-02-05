@@ -36,7 +36,7 @@ class _LoginViewState extends BaseView<LoginView, LoginViewModel>
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         image: DecorationImage(image: AssetImage('assets/bg.png'),fit: BoxFit.fill),
       ),
@@ -45,7 +45,7 @@ class _LoginViewState extends BaseView<LoginView, LoginViewModel>
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: Text('Login',style: TextStyle(
+          title: const Text('Login',style: TextStyle(
             color: Colors.white,fontSize: 28,fontWeight: FontWeight.bold,
           ),),
           centerTitle: true,
@@ -55,7 +55,7 @@ class _LoginViewState extends BaseView<LoginView, LoginViewModel>
         body: Form(
           key: formkey,
           child: Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -74,7 +74,7 @@ class _LoginViewState extends BaseView<LoginView, LoginViewModel>
                   },
                   controller: email,
                   keyboardType: TextInputType.emailAddress,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color.fromRGBO(36, 39, 43, 1.0),
                     fontWeight: FontWeight.normal,
                     fontSize: 18,
@@ -82,20 +82,20 @@ class _LoginViewState extends BaseView<LoginView, LoginViewModel>
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     hintText: 'Please enter e-mail',
-                    hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                    hintStyle: const TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
                       fontSize: 16,fontWeight: FontWeight.normal),
-                    suffixIcon: ImageIcon(AssetImage('assets/Iconfettle.png',),color: Theme.of(context).colorScheme.primary,size: 26, ),
+                    suffixIcon: ImageIcon(const AssetImage('assets/Iconfettle.png',),color: Theme.of(context).colorScheme.primary,size: 26, ),
                     focusColor: Colors.cyan,
-                    border: UnderlineInputBorder(borderSide: BorderSide(
+                    border: const UnderlineInputBorder(borderSide: BorderSide(
                       color: Colors.cyan,
                     )),
                     labelText: 'Email',
-                    labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                    labelStyle:  const TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
                         fontSize: 16,fontWeight: FontWeight.normal),
                   ),
                 ),
 
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
                 TextFormField(
                   controller: password,
@@ -109,14 +109,14 @@ class _LoginViewState extends BaseView<LoginView, LoginViewModel>
                   },
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: visable == true? false:true,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color.fromRGBO(36, 39, 43, 1.0),
                     fontWeight: FontWeight.normal,
                     fontSize: 18,
                   ),
                   decoration: InputDecoration(
                     hintText: 'Please enter password',
-                    hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                    hintStyle: const TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
                         fontSize: 16,fontWeight: FontWeight.normal),
                     suffixIcon: IconButton(
                       onPressed:(){
@@ -129,36 +129,36 @@ class _LoginViewState extends BaseView<LoginView, LoginViewModel>
                           }
                         });
                       },
-                      icon: visable == true? ImageIcon(AssetImage('assets/view.png'), color: Theme.of(context).colorScheme.primary, size: 26,)
+                      icon: visable == true? ImageIcon(const AssetImage('assets/view.png'), color: Theme.of(context).colorScheme.primary, size: 26,)
                           :Icon(Icons.visibility_off_outlined,color:Theme.of(context).colorScheme.primary,size: 26,)
                     ),
                     focusColor: Colors.cyan,
-                    border: UnderlineInputBorder(borderSide: BorderSide(
+                    border: const UnderlineInputBorder(borderSide: BorderSide(
                       color: Colors.cyan,
                     )),
                     labelText: 'Password',
-                    labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                    labelStyle:  const TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
                         fontSize: 16,fontWeight: FontWeight.normal),
                   ),
                 ),
 
-                SizedBox(height: 32,),
+                const SizedBox(height: 32,),
 
-                Text('Forget Email Or Password ?',
+                const Text('Forget Email Or Password ?',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
                   color: Color.fromRGBO(121, 121, 121, 1.0),
                 ),),
-                SizedBox(height: 32,),
+                const SizedBox(height: 32,),
 
                 ElevatedButton(onPressed: (){
                   ValidateForm();
                 },
                     child: Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Row(
-                        children: [
+                        children: const [
                           Text('Login',textAlign: TextAlign.start,
                           style: TextStyle(
                             color: Colors.white,
@@ -171,11 +171,11 @@ class _LoginViewState extends BaseView<LoginView, LoginViewModel>
                       ),
                     ),
                 ),
-                SizedBox(height: 32,),
+                const SizedBox(height: 32,),
 
                 InkWell(
                   onTap: (){
-                    Navigator.pushReplacementNamed(context, RegisterView.routeName);
+                    Navigator.pushNamed(context, RegisterView.routeName);
                   },
                   child: Text('Or Create My Account ?',
                     style: TextStyle(

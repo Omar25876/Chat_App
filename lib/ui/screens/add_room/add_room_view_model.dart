@@ -16,11 +16,4 @@ class AddRoomViewModel extends BaseViewModel<AddRoomNavigator> {
     });
   }
 
-  List<Room> rooms = [];
-
-  void getRooms() {
-    DataBaseUtils.getRoomsFromFirestore().then((value) {
-      rooms = value;
-    });
-  }
 }

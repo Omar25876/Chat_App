@@ -4,41 +4,43 @@ import 'package:flutter/material.dart';
 
 class RoomItem extends StatelessWidget {
   Room room;
-  RoomItem(this.room);
 
+  RoomItem(this.room);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        Navigator.pushNamed(context, ChatView.routeName,arguments: room);
+      onTap: () {
+        Navigator.pushNamed(context, ChatView.routeName, arguments: room);
       },
-      child: Card(
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20)
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20)
-          ),
-          child: Column(
-            children: [
-              Container(
-                width: 180,height:110,
-                  padding: EdgeInsets.only(top: 11),
-                  child: Image.asset('assets/${room.catId}.jpeg',)),
-              Container(
-                padding: EdgeInsets.only(bottom: 4),
-                child: Text("${room.roomName}",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 21
-                ),),
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset("assets/${room.catId}.jpeg")),
+            const SizedBox(height: 10,),
+            Text(room.roomName,style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              overflow: TextOverflow.ellipsis,
+              color: Colors.black,
+            ),),
+          ],
         ),
       ),
     );
