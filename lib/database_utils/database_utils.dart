@@ -46,9 +46,8 @@ class DataBaseUtils{
     return docRef.set(room);
   }
 
-  static Future<List<Room>> getRoomsFromFirestore() async {
-    QuerySnapshot<Room> snapRoom = await getRoomsCollection().get();
-    return snapRoom.docs.map((e) => e.data()).toList();
+  static Stream<QuerySnapshot<Room>> getRoomsFromFirestore() {
+    return getRoomsCollection().snapshots();
   }
 ///////////////////////////////////////////////////////////
 //todo: Messages

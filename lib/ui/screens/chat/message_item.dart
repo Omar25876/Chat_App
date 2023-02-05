@@ -1,20 +1,25 @@
 import 'package:chat/models/message_model.dart';
 import 'package:chat/providers/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-class MessageWidget extends StatelessWidget {
+class MessageWidget extends StatefulWidget {
   Message message;
 
   MessageWidget(this.message);
 
   @override
+  State<MessageWidget> createState() => _MessageWidgetState();
+}
+
+class _MessageWidgetState extends State<MessageWidget> {
+  @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<MyProvider>(context);
-    return provider.myUser!.id == message.senderId
-        ? SenderMessage(message)
-        : ReciverMessage(message);
+    return FirebaseAuth.instance.currentUser!.uid == widget.message.senderId
+        ? SenderMessage(widget.message)
+        : ReciverMessage(widget.message);
   }
 }
 
@@ -35,9 +40,15 @@ class SenderMessage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          Text(
+            message.senderName,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 11, color: Colors.grey
+            ),
+          ),
           Container(
-              padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(18),
@@ -45,14 +56,15 @@ class SenderMessage extends StatelessWidget {
                       bottomLeft: Radius.circular(18))),
               child: Text(
                 message.content,
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     color: Colors.white),
               )),
+          const SizedBox(height: 2,),
           Text(
             date.substring(12),
-            style: TextStyle(
+            style: const TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 11, color: Colors.grey),
           ),
         ],
@@ -79,8 +91,8 @@ class ReciverMessage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(
                   color: Colors.grey,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(18),
@@ -88,12 +100,13 @@ class ReciverMessage extends StatelessWidget {
                       bottomRight: Radius.circular(18))),
               child: Text(
                 message.content,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 11, color: Colors.grey),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
               )),
+          const SizedBox(height: 2,),
           Text(
             date.substring(12),
-            style: TextStyle(
+            style: const TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 11, color: Colors.grey),
           ),
         ],

@@ -3,7 +3,7 @@ import 'package:chat/models/user_model.dart';
 import 'package:chat/ui/screens/base.dart';
 import 'package:chat/ui/screens/login/login_navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+
 
 class LoginViewModel extends BaseViewModel<LoginNavigator> {
   var auth = FirebaseAuth.instance;

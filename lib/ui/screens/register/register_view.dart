@@ -41,7 +41,7 @@ implements RegisterNavigator{
     return ChangeNotifierProvider(
       create: (context) => viewModel,
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(image: AssetImage('assets/bg.png'),fit: BoxFit.fill),
         ),
@@ -49,12 +49,12 @@ implements RegisterNavigator{
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            iconTheme: IconThemeData(
+            iconTheme: const IconThemeData(
               color: Colors.white,
               size: 32,
             ),
             backgroundColor: Colors.transparent,
-            title: Text('Register',style: TextStyle(
+            title: const Text('Register',style: TextStyle(
               color: Colors.white,fontSize: 28,fontWeight: FontWeight.bold,
             ),),
             centerTitle: true,
@@ -64,7 +64,7 @@ implements RegisterNavigator{
           body: Form(
             key: formkey,
             child: Container(
-              padding: EdgeInsets.fromLTRB(20,20,20,50),
+              padding: const EdgeInsets.fromLTRB(20,20,20,50),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -79,27 +79,27 @@ implements RegisterNavigator{
                     },
                     controller: namecontroller,
                     keyboardType: TextInputType.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color.fromRGBO(36, 39, 43, 1.0),
                       fontWeight: FontWeight.normal,
                       fontSize: 18,
                     ),
                     decoration: InputDecoration(
                       hintText: 'Please Enter Your Name',
-                      hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                      hintStyle: const TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
                           fontSize: 16,fontWeight: FontWeight.normal),
                       suffixIcon: Icon(Icons.person,color: Theme.of(context).colorScheme.primary,size: 26,),
                       focusColor: Colors.cyan,
-                      border: UnderlineInputBorder(borderSide: BorderSide(
+                      border: const UnderlineInputBorder(borderSide: BorderSide(
                         color: Colors.cyan,
                       )),
                       labelText: 'Name',
-                      labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                      labelStyle:  const TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
                           fontSize: 16,fontWeight: FontWeight.normal),
                     ),
                   ),
 
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   TextFormField(
                     textInputAction: TextInputAction.next,
                     validator: (text){
@@ -115,27 +115,27 @@ implements RegisterNavigator{
                     },
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color.fromRGBO(36, 39, 43, 1.0),
                       fontWeight: FontWeight.normal,
                       fontSize: 18,
                     ),
                     decoration: InputDecoration(
                       hintText: 'Please enter e-mail',
-                      hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                      hintStyle: const TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
                           fontSize: 16,fontWeight: FontWeight.normal),
-                      suffixIcon: ImageIcon(AssetImage('assets/Iconfettle.png',),color: Theme.of(context).colorScheme.primary,size: 40, ),
+                      suffixIcon: ImageIcon(const AssetImage('assets/Iconfettle.png',),color: Theme.of(context).colorScheme.primary,size: 40, ),
                       focusColor: Colors.cyan,
-                      border: UnderlineInputBorder(borderSide: BorderSide(
+                      border: const UnderlineInputBorder(borderSide: BorderSide(
                         color: Colors.cyan,
                       )),
                       labelText: 'Email',
-                      labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                      labelStyle:  const TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
                           fontSize: 16,fontWeight: FontWeight.normal),
                     ),
                   ),
 
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
 
                   TextFormField(
                     textInputAction: TextInputAction.done,
@@ -150,14 +150,14 @@ implements RegisterNavigator{
                     controller: passwordController,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: visable == true? false:true,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color.fromRGBO(36, 39, 43, 1.0),
                       fontWeight: FontWeight.normal,
                       fontSize: 18,
                     ),
                     decoration: InputDecoration(
                       hintText: 'Please enter password',
-                      hintStyle: TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                      hintStyle: const TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
                           fontSize: 16,fontWeight: FontWeight.normal),
                       suffixIcon: IconButton(
                           onPressed:(){
@@ -170,28 +170,28 @@ implements RegisterNavigator{
                               }
                             });
                           },
-                          icon: visable == true? ImageIcon(AssetImage('assets/view.png'), color: Theme.of(context).colorScheme.primary, size: 26,)
+                          icon: visable == true? ImageIcon(const AssetImage('assets/view.png'), color: Theme.of(context).colorScheme.primary, size: 26,)
                               :Icon(Icons.visibility_off_outlined,color:Theme.of(context).colorScheme.primary,size: 26,)
                       ),
                       focusColor: Colors.cyan,
-                      border: UnderlineInputBorder(borderSide: BorderSide(
+                      border: const UnderlineInputBorder(borderSide: BorderSide(
                         color: Colors.cyan,
                       )),
                       labelText: 'Password',
-                      labelStyle:  TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
+                      labelStyle:  const TextStyle(color: Color.fromRGBO(121, 121, 121, 1.0),
                           fontSize: 16,fontWeight: FontWeight.normal),
                     ),
                   ),
 
-                 Spacer(),
+                 const Spacer(),
 
                   ElevatedButton(onPressed: (){
                     validateAccount();
                   },
                     child: Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Row(
-                        children: [
+                        children: const [
                           Text('Create Account',textAlign: TextAlign.start,
                             style: TextStyle(
                               color: Colors.white,
@@ -204,10 +204,10 @@ implements RegisterNavigator{
                       ),
                     ),
                   ),
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
                   InkWell(
                     onTap: (){
-                      Navigator.pushNamed(context, LoginView.routeName);
+                      Navigator.pushReplacementNamed(context, LoginView.routeName);
                     },
                     child: Text('Already Have Account ?',
                       style: TextStyle(

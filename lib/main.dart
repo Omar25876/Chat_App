@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
       initialRoute: provider.firebaseUser != null?HomeScreen.routName:LoginView.routeName,
       theme: MyTheme.Light,
       themeMode: ThemeMode.light,
+
     );
   }
 }
