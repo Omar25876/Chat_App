@@ -1,7 +1,7 @@
 class RoomCategory {
-  static String sportsId = "sports";
-  static String moviesId = "movies";
-  static String musicId = "music";
+  static const String sportsId = "sports";
+  static const String moviesId = "movies";
+  static const String musicId = "music";
   String id;
   late String name;
   late String image;
