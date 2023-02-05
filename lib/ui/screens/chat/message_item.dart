@@ -40,6 +40,12 @@ class SenderMessage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          Text(
+            message.senderName,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 11, color: Colors.grey
+            ),
+          ),
           Container(
               padding: const EdgeInsets.all(12),
               decoration: const BoxDecoration(
